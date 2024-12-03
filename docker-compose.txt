@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    command: ["npm", "start"]
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=development
+    command: ["npm", "run", "dev"]
+
+  db:
+    image: mysql:8.0
+    container_name: database
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin 
+      - MYSQL_DATABASE=social-media
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
