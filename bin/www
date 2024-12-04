@@ -3,6 +3,7 @@
 var app = require('../app');
 var http = require('http');
 
+
 // Normalize the port and set it for Express
 var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
@@ -56,3 +57,4 @@ function onListening() {
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   console.log('Listening on ' + bind);
 }
+
