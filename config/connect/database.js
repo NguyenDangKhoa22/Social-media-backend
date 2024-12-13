@@ -1,22 +1,25 @@
-const mysql = require('mysql2');
+
 require('dotenv').config();
+const { Sequelize } = require('sequelize');
 
-// Tạo kết nối đến database
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost', // Tên host
-  port: process.env.DB_PORT || 3306,       // Cổng MySQL
-  user: process.env.DB_USERNAME || 'root', // Tên người dùng
-  password: process.env.DB_PASSWORD || 'admin', // Mật khẩu
-  database: process.env.DB_DATABASE || 'social-media', // Tên cơ sở dữ liệu
-});
-
-// Kiểm tra kết nối
-connection.connect((err) => {
-  if (err) {
-    console.error('Kết nối đến database thất bại:', err.message);
-    process.exit(1);
+const dbConnection = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'mysql',
+    logging: false,
   }
-  console.log('Kết nối đến database thành công!');
-});
+);
+(async () => {
+  try {
+    await dbConnection.authenticate();
+    console.log('Kết nối cơ sở dữ liệu thành công!');
+  } catch (error) {
+    console.error('Không thể kết nối cơ sở dữ liệu:', error);
+  }
+})();
 
-module.exports = connection;
+module.exports = dbConnection;
