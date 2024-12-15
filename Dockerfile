@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Mở cổng mà ứng dụng sử dụng
-EXPOSE 3000
+EXPOSE 4000
 
 # Lệnh khởi động ứng dụng
 CMD ["npm", "run", "dev"]
